@@ -1,9 +1,14 @@
-package flgui.shapes;
+package flgui.shapes.primative;
 
 import openfl.Vector;
+
 import openfl.display.BitmapData;
+import openfl.display.Shape;
 
 import flgui.tools.ColorFill;
+
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
 
 /**
  * ...
@@ -14,7 +19,7 @@ import flgui.tools.ColorFill;
 class Quadrilateral extends ShapeBase
 {
 	
-	public function new(_width:Float = 30, _height:Float = 30, ?_fill:BitmapData) 
+	public function new(_width:Float = 30, _height:Float = 30, _interactive:Bool = true, ?_fill:BitmapData) 
 	{
 		super();
 		
@@ -44,14 +49,13 @@ class Quadrilateral extends ShapeBase
 		tris = new Vector(tempArray.length, true, tempArray);
 		
 		render();
-	}
-	override public function render() 
-	{
-		super.render();
 		
-		graphics.clear();
-		graphics.beginBitmapFill(fill);
-		graphics.drawTriangles(tris);
+		mouseEnabled = false;
+		
+		if (_interactive) {
+			hitbox = new Bitmap(new BitmapData(Std.int(_width), Std.int(_height), true, 0));
+			mouseEnabled = true;
+			addChild(hitbox);
+		}
 	}
-	
 }
